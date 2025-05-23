@@ -76,6 +76,23 @@ body {
   color: #141313;
 }
 
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #e5e5e5;
+  color: #7a7878;
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: #3b90f3; /* Blue accent from main page */
+  box-shadow: 0 0 5px rgba(59, 144, 243, 0.3);
+  color: #141313;
+}
+
 .form-group input::placeholder {
   color: #7a7878;
   font-weight: 400;

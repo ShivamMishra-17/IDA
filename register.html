@@ -58,6 +58,15 @@
               <input type="text" name="city" placeholder="City" required />
             </div>
             <div class="form-group">
+              <select name="food-option" id="food-option" required>
+                <option value="" disabled selected
+                  >-- Food Preference --</option
+                >
+                <option value="Regular">Regular</option>
+                <option value="Jain">Jain</option>
+              </select>
+            </div>
+            <div class="form-group">
               <input
                 type="text"
                 name="clinic-name"
@@ -110,8 +119,12 @@
           // collect form data
           userData = {
             name: form["first-name"].value + " " + form["last-name"].value,
-            email: "demo@example.com", // replace with optional field or fixed if required
             contact: form["whatsapp-number"].value,
+            city: form["city"].value,
+            clinic: form["clinic-name"].value,
+            food: form["food-option"].value,
+            membership: "", // to be filled when payment type is selected
+            paymentId: "",
           };
 
           // show popup
@@ -132,7 +145,26 @@
               ? "IDA Member Registration"
               : "Non-IDA Member Registration",
           handler: function (response) {
+            userData.membership = type === "ida" ? "IDA" : "Non-IDA";
+            userData.paymentId = response.razorpay_payment_id;
+
+            // Show success message
             document.getElementById("success-message").style.display = "block";
+
+            // Send data to Google Sheet
+            fetch(
+              "https://script.google.com/a/macros/voidsolutions.in/s/AKfycbwduQv4jGhrAyAYogWv4v8-L_jJoE09fdW9kGGHm0gn38P7EiRmnoLcCgqzbxIrcXM/exec",
+              {
+                method: "POST",
+                body: JSON.stringify(userData),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            )
+              .then((res) => res.text())
+              .then((data) => console.log("Sheet saved:", data))
+              .catch((err) => console.error("Error saving to sheet:", err));
           },
           prefill: {
             name: userData.name,
