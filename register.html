@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Gujarat State CDE</title>
+    <link rel="stylesheet" href="css/register.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="logo-container">
+          <img
+            src="assets/2-removebg-preview (1).png"
+            class="r-logo"
+            alt="Logo" />
+        </div>
+
+        <div class="logo-container">
+          <img
+            src="assets/1-removebg-preview (1).png"
+            class="l-logo"
+            alt="Logo" />
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="register-section">
+        <div class="form-box">
+          <h1>Book Your Seat Now</h1>
+          <form action="#" class="register-form" id="registration-form">
+            <div class="form-group">
+              <input
+                type="text"
+                name="first-name"
+                placeholder="First Name"
+                required />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                name="last-name"
+                placeholder="Last Name"
+                required />
+            </div>
+            <div class="form-group">
+              <input
+                type="tel"
+                name="whatsapp-number"
+                placeholder="WhatsApp Phone Number"
+                required />
+            </div>
+            <div class="form-group">
+              <input type="text" name="city" placeholder="City" required />
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                name="clinic-name"
+                placeholder="Clinic Name (Optional)" />
+            </div>
+            <button type="submit" class="submit-btn">Register now</button>
+          </form>
+          <div id="success-message">
+            <h3>✅ Registration & Payment Successful!</h3>
+            <p>Click below to join our WhatsApp Group:</p>
+            <a href="https://chat.whatsapp.com/yourgroupinvite" target="_blank"
+              >Join WhatsApp Group</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Popup -->
+    <div class="popup" id="membership-popup">
+      <div class="popup-content modern">
+        <button
+          class="close-btn"
+          onclick="document.getElementById('membership-popup').style.display='none'"
+          >&times;</button
+        >
+        <h2>Select Membership</h2>
+        <p>Please choose your registration category to proceed with payment:</p>
+        <div class="btn-group">
+          <button class="pay-btn ida" onclick="startPayment('ida')">
+            <strong>IDA Member</strong><br />₹1299
+          </button>
+          <button class="pay-btn nonida" onclick="startPayment('nonida')">
+            <strong>Non-IDA Member</strong><br />₹1499
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+      let userData = {};
+
+      document
+        .getElementById("registration-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const form = e.target;
+
+          // collect form data
+          userData = {
+            name: form["first-name"].value + " " + form["last-name"].value,
+            email: "demo@example.com", // replace with optional field or fixed if required
+            contact: form["whatsapp-number"].value,
+          };
+
+          // show popup
+          document.getElementById("membership-popup").style.display = "flex";
+        });
+
+      function startPayment(type) {
+        const amount = type === "ida" ? 1299 : 1499;
+        document.getElementById("membership-popup").style.display = "none";
+
+        const options = {
+          key: "YOUR_RAZORPAY_KEY_ID", // Replace this with your actual key
+          amount: amount * 100,
+          currency: "INR",
+          name: "Gujarat State CDE",
+          description:
+            type === "ida"
+              ? "IDA Member Registration"
+              : "Non-IDA Member Registration",
+          handler: function (response) {
+            document.getElementById("success-message").style.display = "block";
+          },
+          prefill: {
+            name: userData.name,
+            email: userData.email,
+            contact: userData.contact,
+          },
+          theme: {
+            color: "#0e8a16",
+          },
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+      }
+    </script>
+  </body>
+</html>
