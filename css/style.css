@@ -547,10 +547,6 @@ footer {
   margin-bottom: 2rem;
 }
 
-.footer-list li a:hover {
-  color: #ffffff;
-}
-
 .footer-logo {
   display: block;
   margin: 0 auto 3rem; /* Center image with margin below */
