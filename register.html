@@ -49,6 +49,13 @@
             </div>
             <div class="form-group">
               <input
+                type="email"
+                name="email-address"
+                placeholder="Email Address"
+                required />
+            </div>
+            <div class="form-group">
+              <input
                 type="tel"
                 name="whatsapp-number"
                 placeholder="WhatsApp Phone Number"
@@ -119,6 +126,7 @@
           // collect form data
           userData = {
             name: form["first-name"].value + " " + form["last-name"].value,
+            email: form["email-address"].value,
             contact: form["whatsapp-number"].value,
             city: form["city"].value,
             clinic: form["clinic-name"].value,
