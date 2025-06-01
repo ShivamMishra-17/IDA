@@ -104,10 +104,10 @@
         <p>Please choose your registration category to proceed with payment:</p>
         <div class="btn-group">
           <button class="pay-btn ida" onclick="startPayment('ida')">
-            <strong>IDA Member</strong><br />₹1299
+            <strong>IDA Member</strong><br />₹2
           </button>
           <button class="pay-btn nonida" onclick="startPayment('nonida')">
-            <strong>Non-IDA Member</strong><br />₹1499
+            <strong>Non-IDA Member</strong><br />₹3
           </button>
         </div>
       </div>
@@ -140,11 +140,11 @@
         });
 
       function startPayment(type) {
-        const amount = type === "ida" ? 1299 : 1499;
+        const amount = type === "ida" ? 2 : 3;
         document.getElementById("membership-popup").style.display = "none";
 
         const options = {
-          key: "YOUR_RAZORPAY_KEY_ID", // Replace this with your actual key
+          key: "rzp_live_OuO8pkItqf5MOQ", // Replace this with your actual key
           amount: amount * 100,
           currency: "INR",
           name: "Gujarat State CDE",
